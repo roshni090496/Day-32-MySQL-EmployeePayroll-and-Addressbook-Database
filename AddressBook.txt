@@ -1,0 +1,172 @@
+Enter password: *************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.29 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE address_book;
+Query OK, 1 row affected (0.14 sec)
+
+mysql> SHOW databases;
++-----------------------+
+| Database              |
++-----------------------+
+| address_book          |
+| addressbook_servicedb |
+| candidate             |
+| information_schema    |
+| mysql                 |
+| payroll_service       |
+| payroll_service1      |
+| payroll_services      |
+| performance_schema    |
+| sakila                |
+| sys                   |
+| world                 |
++-----------------------+
+12 rows in set (0.06 sec)
+
+mysql> USE address_book;
+Database changed
+mysql> CREATE TABLE address_book(First_name varchar(50),
+    ->
+    -> Last_name VARCHAR(50),
+    -> Address VARCHAR(150),
+    -> City VARCHAR(50),
+    -> State VARCHAR(50),
+    -> Zip_code int,
+    -> Phone_number int,
+    -> Email VARCHAR(50));
+Query OK, 0 rows affected (0.50 sec)
+
+mysql> USE address_book;
+Database changed
+mysql> CREATE TABLE address_book(First_name varchar(50),
+    -> Last_name VARCHAR(50),
+    -> Address VARCHAR(150),
+    -> City VARCHAR(50),
+    -> State VARCHAR(50),
+    -> Zip_code int,
+    -> Phone_number int,
+    -> Email VARCHAR(50));
+ERROR 1050 (42S01): Table 'address_book' already exists
+mysql> INSERT INTO address_book VALUES('Roshni','Singh','CIDCO','nashik','MH','523272','9398359','roshni73@gmail.com');
+Query OK, 1 row affected (0.36 sec)
+
+mysql> INSERT INTO address_book VALUES('Sweety','Singh','Mahuari','siwan','Bihar','423261','8598258','sweety73@gmail.com');
+Query OK, 1 row affected (0.39 sec)
+
+mysql> INSERT INTO address_book VALUES('Seeya','Singh','Mahuari','siwan','Bihar','410261','8578538','Seeya973@gmail.com');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> SELECT * FROM address_book;
++------------+-----------+---------+--------+-------+----------+--------------+--------------------+
+| First_name | Last_name | Address | City   | State | Zip_code | Phone_number | Email              |
++------------+-----------+---------+--------+-------+----------+--------------+--------------------+
+| Roshni     | Singh     | CIDCO   | nashik | MH    |   523272 |      9398359 | roshni73@gmail.com |
+| Sweety     | Singh     | Mahuari | siwan  | Bihar |   423261 |      8598258 | sweety73@gmail.com |
+| Seeya      | Singh     | Mahuari | siwan  | Bihar |   410261 |      8578538 | Seeya973@gmail.com |
++------------+-----------+---------+--------+-------+----------+--------------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE address_book SET state = 'Bihar' where First_name = 'Roshni';
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> DELETE FROM address_book WHERE First_name = 'Roshni';
+Query OK, 1 row affected (0.13 sec)
+
+mysql> SELECT * FROM address_book WHERE City = 'nashik';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM address_book WHERE City = 'Bihar';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM address_book WHERE City = 'Siwan';
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+| First_name | Last_name | Address | City  | State | Zip_code | Phone_number | Email              |
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+| Sweety     | Singh     | Mahuari | siwan | Bihar |   423261 |      8598258 | sweety73@gmail.com |
+| Seeya      | Singh     | Mahuari | siwan | Bihar |   410261 |      8578538 | Seeya973@gmail.com |
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM address_book WHERE State = 'Bihar';
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+| First_name | Last_name | Address | City  | State | Zip_code | Phone_number | Email              |
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+| Sweety     | Singh     | Mahuari | siwan | Bihar |   423261 |      8598258 | sweety73@gmail.com |
+| Seeya      | Singh     | Mahuari | siwan | Bihar |   410261 |      8578538 | Seeya973@gmail.com |
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM address_book WHERE City = 'Siwan' OR State = 'Bihar';
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+| First_name | Last_name | Address | City  | State | Zip_code | Phone_number | Email              |
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+| Sweety     | Singh     | Mahuari | siwan | Bihar |   423261 |      8598258 | sweety73@gmail.com |
+| Seeya      | Singh     | Mahuari | siwan | Bihar |   410261 |      8578538 | Seeya973@gmail.com |
++------------+-----------+---------+-------+-------+----------+--------------+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(First_name) FROM address_book WHERE City = 'Siwan';
++-------------------+
+| COUNT(First_name) |
++-------------------+
+|                 2 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(First_name) FROM address_book WHERE State = 'Bihar';
++-------------------+
+| COUNT(First_name) |
++-------------------+
+|                 2 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(First_name) FROM address_book WHERE City = 'Siwan' or State = 'Bihar';
++-------------------+
+| COUNT(First_name) |
++-------------------+
+|                 2 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO address_book VALUES('reema','raut','Star-Base','indore','MP','400005','1845875','reema@gmail.com');
+Query OK, 1 row affected (0.34 sec)
+
+mysql> SELECT * FROM address_book ORDER BY City ASC;
++------------+-----------+-----------+--------+-------+----------+--------------+--------------------+
+| First_name | Last_name | Address   | City   | State | Zip_code | Phone_number | Email              |
++------------+-----------+-----------+--------+-------+----------+--------------+--------------------+
+| reema      | raut      | Star-Base | indore | MP    |   400005 |      1845875 | reema@gmail.com    |
+| Sweety     | Singh     | Mahuari   | siwan  | Bihar |   423261 |      8598258 | sweety73@gmail.com |
+| Seeya      | Singh     | Mahuari   | siwan  | Bihar |   410261 |      8578538 | Seeya973@gmail.com |
++------------+-----------+-----------+--------+-------+----------+--------------+--------------------+
+3 rows in set (0.02 sec)
+
+mysql> INSERT INTO address_book VALUES('seema','rao','Star-Base','indore','MP','4005','18875','a@gmail.com');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> SELECT * FROM address_book  WHERE City='indore' ORDER BY First_name ASC;
++------------+-----------+-----------+--------+-------+----------+--------------+-----------------+
+| First_name | Last_name | Address   | City   | State | Zip_code | Phone_number | Email           |
++------------+-----------+-----------+--------+-------+----------+--------------+-----------------+
+| reema      | raut      | Star-Base | indore | MP    |   400005 |      1845875 | reema@gmail.com |
+| seema      | rao       | Star-Base | indore | MP    |     4005 |        18875 | a@gmail.com     |
++------------+-----------+-----------+--------+-------+----------+--------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE address_book ADD Type varchar(50);
+Query OK, 0 rows affected (0.42 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>

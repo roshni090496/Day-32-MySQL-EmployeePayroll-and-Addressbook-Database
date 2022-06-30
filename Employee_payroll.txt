@@ -1,0 +1,162 @@
+Enter password: *************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.29 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE payroll_service;
+ERROR 1007 (HY000): Can't create database 'payroll_service'; database exists
+mysql> CREATE DATABASE payroll_service2;
+Query OK, 1 row affected (0.13 sec)
+
+mysql> SHOW DATABASES;
++-----------------------+
+| Database              |
++-----------------------+
+| address_book          |
+| addressbook_servicedb |
+| candidate             |
+| information_schema    |
+| mysql                 |
+| payroll_service       |
+| payroll_service1      |
+| payroll_service2      |
+| payroll_services      |
+| performance_schema    |
+| sakila                |
+| sys                   |
+| world                 |
++-----------------------+
+13 rows in set (0.00 sec)
+
+mysql> USE payroll_service2;
+Database changed
+mysql> CREATE TABLE employee_payroll(ID int PRIMARY KEY AUTO_INCREMENT , Name VARCHAR(50) , Salary int , Start_date DATE);
+Query OK, 0 rows affected (1.00 sec)
+
+mysql> INSERT INTO employee_payroll VALUES(1,'Sweety Singh',350000,'2020-12-20');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO employee_payroll VALUES(2,'Seeya Singh',450000,'2020-11-06');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> INSERT INTO employee_payroll VALUES(3,'Roshni Singh',550000,'2021-01-06');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> INSERT INTO employee_payroll VALUES(4,'Baby Singh',650000,'2021-08-09');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO employee_payroll VALUES(5,'Raj Singh',600000,'2021-10-09');
+Query OK, 1 row affected (0.17 sec)
+
+mysql>  SELECT * FROM employee_payroll;
++----+--------------+--------+------------+
+| ID | Name         | Salary | Start_date |
++----+--------------+--------+------------+
+|  1 | Sweety Singh | 350000 | 2020-12-20 |
+|  2 | Seeya Singh  | 450000 | 2020-11-06 |
+|  3 | Roshni Singh | 550000 | 2021-01-06 |
+|  4 | Baby Singh   | 650000 | 2021-08-09 |
+|  5 | Raj Singh    | 600000 | 2021-10-09 |
++----+--------------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Salary FROM employee_payroll WHERE Name = 'Raj';
+Empty set (0.00 sec)
+
+mysql> SELECT Salary FROM employee_payroll WHERE Name = 'Raj Singh';
++--------+
+| Salary |
++--------+
+| 600000 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Name FROM employee_payroll WHERE Start_date BETWEEN CAST('2020-10-01' AS DATE) AND DATE(NOW());
++--------------+
+| Name         |
++--------------+
+| Sweety Singh |
+| Seeya Singh  |
+| Roshni Singh |
+| Baby Singh   |
+| Raj Singh    |
++--------------+
+5 rows in set (0.04 sec)
+
+mysql> ALTER TABLE employee_payroll ADD COLUMN Gender CHAR(1);
+Query OK, 0 rows affected (0.32 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE employee_payroll set Gender = 'F' WHERE Name = 'Sweety Singh' or Name = 'Seeya Singh';
+Query OK, 2 rows affected (0.09 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE employee_payroll set Gender = 'F' WHERE Name = 'Roshni Singh' or Name = 'Baby Singh';
+Query OK, 2 rows affected (0.08 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE employee_payroll set Gender = 'M' WHERE Name = 'Raj Singh';
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT SUM(Salary) FROM employee_payroll WHERE Gender = 'F' GROUP BY Gender;
++-------------+
+| SUM(Salary) |
++-------------+
+|     2000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ID , Name , AVG(Salary) FROM employee_payroll GROUP BY Gender;
++----+--------------+-------------+
+| ID | Name         | AVG(Salary) |
++----+--------------+-------------+
+|  1 | Sweety Singh | 500000.0000 |
+|  5 | Raj Singh    | 600000.0000 |
++----+--------------+-------------+
+2 rows in set (0.06 sec)
+
+mysql> SELECT MIN(Salary) FROM employee_payroll WHERE Gender = 'M' GROUP BY Gender;
++-------------+
+| MIN(Salary) |
++-------------+
+|      600000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ID , Name , MAX(Salary) FROM employee_payroll GROUP BY Gender;
++----+--------------+-------------+
+| ID | Name         | MAX(Salary) |
++----+--------------+-------------+
+|  1 | Sweety Singh |      650000 |
+|  5 | Raj Singh    |      600000 |
++----+--------------+-------------+
+2 rows in set (0.04 sec)
+
+mysql>  SELECT Gender , COUNT(Gender) FROM employee_payroll GROUP BY GENDER;
++--------+---------------+
+| Gender | COUNT(Gender) |
++--------+---------------+
+| F      |             4 |
+| M      |             1 |
++--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT Name , COUNT(Name) FROM employee_payroll GROUP BY GENDER;
++--------------+-------------+
+| Name         | COUNT(Name) |
++--------------+-------------+
+| Sweety Singh |           4 |
+| Raj Singh    |           1 |
++--------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql>
